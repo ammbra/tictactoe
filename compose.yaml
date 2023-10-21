@@ -1,0 +1,38 @@
+services:
+  springboot-tictactoe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name:  springboot-tictactoe
+    ports:
+      - 8080:8080
+    networks:
+      default: null
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    links:
+      - springboot-tictactoe
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      default: null
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    links:
+      - prometheus
+    volumes:
+      - ./grafana/grafana-datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana/grafana-all-dashboards.yml:/etc/grafana/provisioning/dashboards/all.yml
+    environment:
+      GF_INSTALL_PLUGINS: grafana-simple-json-datasource
+    networks:
+      default: null
+networks:
+  default:
+    name: backend
