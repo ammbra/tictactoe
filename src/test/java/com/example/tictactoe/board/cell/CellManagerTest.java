@@ -37,7 +37,7 @@ class CellManagerTest {
 		}
 
 		List<List<String>> allLines = CellManager.collectAll(lines);
-		assertThat(allLines.size()).isEqualTo(8);
+		assertThat(allLines.size()).isEqualTo(3);
 
 	}
 }

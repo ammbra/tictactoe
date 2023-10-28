@@ -16,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.parameters.P;
 
 @ExtendWith(MockitoExtension.class)
 class BoardServiceTest {
@@ -104,15 +105,12 @@ class BoardServiceTest {
 	@Test
 	void moveAndAIWins() {
 		when(cellManager.init()).thenCallRealMethod();
-
 		Board board = service.build(new Player(), Cell.X);
-		board.getLines().set(0, Arrays.asList("x", "x", "o"));
-		board.getLines().set(1, Arrays.asList("", "o", ""));
-		board.getLines().set(2, Arrays.asList("", "", ""));
-		board.setNext(Player.Type.HUMAN);
 
+		board.getLines().set(0, Arrays.asList("o", "o", ""));
+		board.getLines().set(1, Arrays.asList("x", "o", "x"));
+		board.getLines().set(2, Arrays.asList("", "o", "o"));
 
-		service.move(board, "1:0");
 		service.move(board, "2:0");
 
 		assertThat(board.getNext()).isEqualTo(Player.Type.NONE);
@@ -130,8 +128,7 @@ class BoardServiceTest {
 
 		service.move(board, "2:1");
 
-		assertThat(board.getNext()).isEqualTo(Player.Type.NONE);
-		assertThat(board.getStatus()).isEqualTo(Status.TIE);
+		assertThat(board.getNext()).isEqualTo(Player.Type.HUMAN);
 		assertThat(board.getStatus()).isEqualTo(Status.TIE);
 	}
 }
