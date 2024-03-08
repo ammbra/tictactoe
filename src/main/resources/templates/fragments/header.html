@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:th="https://www.thymeleaf.org">
+
+<body>
+    <header class="header-container">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <span>
+                <span class="navbar-brand" th:text="#{welcome.text}">
+                </span><span class="navbar-brand" th:text="${#strings.capitalize(#authentication.name)}"></span></span>
+                <div class="d-flex align-items-right">
+                    <form class="form-inline" id="mark" method="POST" th:action="@{/}">
+                        <div class="btn-again-wrap">
+                            <button class="btn btn-success" id="btn-again" role="button" th:text="#{btn.again}"></button>
+                        </div>
+
+                        <input id="game-over" th:if="${game != null && game.status() != null}" th:value="${game.status().name() != 'ACTIVE'}" type="hidden" />
+                        <input id="coordinate" name="coordinate" type="hidden" value="" />
+                        <input id="again" name="again" type="hidden" value="false"/>
+                    </form>
+                    <form id="form-logout" method="post" th:action="@{/logout}">
+                        <div class="btn-player-logout-wrap">
+                            <button type="button" id="btn-player-logout" class="btn btn-primary" th:text="#{btn.logout}"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+</body>
+
+</html>

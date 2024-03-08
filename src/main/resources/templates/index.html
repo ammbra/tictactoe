@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:replace="~{fragments/common :: common(~{::title}, ~{::script}, ~{::link})}">
+    <title>TicTacToe Play</title>
+
+    <script src="js/script.js"></script>
+
+    <link rel="stylesheet" href="css/game.css" />
+</head>
+
+<body>
+
+    <div th:insert="~{fragments/header :: header}"></div>
+
+    <div class="board-area">
+        <h3 class="board-status">
+            <th:block th:switch="${game.status().name()}">
+                <div th:case="'ACTIVE'" class="alert alert-primary" role="alert">
+                   <span th:text="#{status.active}"></span><span th:text="${game.humanTurn() ?  'X' : 'O'}"></span>
+                </div>
+                <div th:case="'PERSON_WIN'" class="alert alert-success" role="alert" th:text="#{status.win}"/>
+                <div th:case="'AI_WIN'" class="alert alert-danger" role="alert" th:text="#{status.lose}"/>
+                <div th:case="'TIE'" class="alert alert-warning" role="alert" th:text="#{status.tie}"/>
+            </th:block>
+        </h3>
+
+        <table class="board">
+            <tr th:each="row, i : ${game.lines()}" class="board-row">
+                <td th:each="cell, j : ${row}">
+                    <div th:id="${i.index} + ':' + ${j.index}" class="board-cell"
+                        th:classappend="${cell != ''} ? ${cell} + '-rate' : (${game.status().name() == 'ACTIVE'} ? 'free')"
+                        th:text="${cell}">
+                        &nbsp
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>

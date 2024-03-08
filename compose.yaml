@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  springboot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name:  springboot
+    environment:
+      JDK_JAVA_OPTIONS: >
+        -XX:StartFlightRecording:settings=myprofile.jfc,maxage=5m,dumponexit=true
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Dcom.sun.management.jmxremote.authenticate=true
+        -Dcom.sun.management.jmxremote.rmi.port=1099
+        -Dcom.sun.management.jmxremote.port=1099
+        -Dcom.sun.management.jmxremote=true
+        -Dcom.sun.management.jmxremote.access.file=/etc/jmxremote/jmxremote.access
+        -Dcom.sun.management.jmxremote.password.file=/etc/jmxremote/jmxremote.password
+        -Djava.rmi.server.hostname='localhost'
+        -Djava.security.debug=certpath
+        -Djavax.net.debug=ssl:handshake:verbose:keymanager:trustmanager
+        -Djava.security.debug=access:stack
+        -Dserver.ssl.key-store=/stores/keystore.p12
+    volumes:
+      - ./myprofile.jfc:/myprofile.jfc
+      - ./stores/keystore.p12:/stores/keystore.p12
+      - ./stores/jmxremote.access:/etc/jmxremote/jmxremote.access
+      - ./stores/jmxremote.password:/etc/jmxremote/jmxremote.password
+    ports:
+      - 8443:8443
+      - 1099:1099
+    networks: [backing-services]
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    depends_on:
+      - springboot
+    networks: [backing-services]
+networks:
+  backing-services:
+    driver: bridge

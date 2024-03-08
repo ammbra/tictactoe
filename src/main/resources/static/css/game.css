@@ -1,0 +1,46 @@
+.board-area {
+    text-align: center;
+    margin: 20px;
+}
+
+.board-status {
+    margin: 0 auto 15px auto !important;
+}
+
+.board {
+    border: 2px solid black;
+    margin: 10px auto;
+}
+
+.board td {
+    border: 1px solid black;
+    padding: 0;
+}
+
+.board-cell {
+    text-align: center;
+    height: 100px;
+    width: 100px;
+    font-size: 60px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+}
+
+.board-cell.x-rate {
+    background-color: #E0E722;
+}
+
+.board-cell.o-rate {
+    background-color: #B026FF;
+}
+
+.board-cell.free:hover {
+    cursor: cell;
+    background: #EEE;
+}
+
+.btn-again-wrap, .btn-player-logout-wrap {
+    margin-right: 10px;
+    margin-top: 10px;
+}
