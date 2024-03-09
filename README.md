@@ -73,6 +73,16 @@ openssl pkcs12 -export -out ana.p12 -name "ana" -inkey ana.key -in ana.crt
 
 5. Import the generated certificate (`ana.p12`) in your browser.
 
+Do not forget to reference the location of your keystore/truststore in the `application.properties` file:
+
+```text
+server.ssl.bundle=mybundle
+spring.ssl.bundle.jks.mybundle.keystore.location=stores/keystore.p12
+spring.ssl.bundle.jks.mybundle.truststore.location=stores/truststore.p12
+```
+
+**IMPORTANT** For demo purposes, `application.properties` file contains the passwords in clear. For production environments you must consider encrypting your passwords.
+
 ## How to play
 
 You can start the application locally
@@ -96,7 +106,34 @@ You can deploy the application locally via Docker Compose. First build the appli
 ./mvnw clean verify
 ```
 
-And then invoke:
+By default, the provided docker compose file has enabled remote JMX connection via `JDK_JAVA_OPTIONS` environment variable:
+
+```shell
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Dcom.sun.management.jmxremote.authenticate=true
+        -Dcom.sun.management.jmxremote.rmi.port=1099
+        -Dcom.sun.management.jmxremote.port=1099
+        -Dcom.sun.management.jmxremote=true
+        -Dcom.sun.management.jmxremote.access.file=/etc/jmxremote/jmxremote.access
+        -Dcom.sun.management.jmxremote.password.file=/etc/jmxremote/jmxremote.password
+```
+
+and mounts the `jmxremote.access` and `jmxremote.password` files as volumes from stores folder:
+
+```yaml
+    volumes:
+      - ./stores/jmxremote.access:/etc/jmxremote/jmxremote.access
+      - ./stores/jmxremote.password:/etc/jmxremote/jmxremote.password
+```
+
+If you wish to keep that configuration, make sure that you can read and write the `/etc/jmxremote/jmxremote.password` and other users have no access to it.
+An example on how to do that on Mac/Linux is by running the following command over :
+
+```shell
+chmod 0600 stores/jmxremote.password 
+```
+
+Now you can invoke `docker-compose up` command:
 
 ```
 docker-compose up --build

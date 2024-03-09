@@ -20,7 +20,7 @@ services:
         -Djava.security.debug=certpath
         -Djavax.net.debug=ssl:handshake:verbose:keymanager:trustmanager
         -Djava.security.debug=access:stack
-        -Dserver.ssl.key-store=/stores/keystore.p12
+        -Dspring.ssl.bundle.jks.game.keystore.location=/stores/keystore.p12
     volumes:
       - ./myprofile.jfc:/myprofile.jfc
       - ./stores/keystore.p12:/stores/keystore.p12
