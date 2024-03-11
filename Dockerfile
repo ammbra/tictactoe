@@ -2,7 +2,7 @@
 FROM container-registry.oracle.com/java/openjdk:21-oraclelinux8 as jre-build
 
 RUN $JAVA_HOME/bin/jlink \
-       --add-modules java.base,java.compiler,java.desktop,java.instrument,java.management,java.net.http,java.prefs,java.rmi,java.scripting,java.security.jgss,java.sql.rowset,jdk.jfr,jdk.net,jdk.unsupported,jdk.management.agent,jdk.crypto.ec \
+       --add-modules java.base,java.compiler,java.desktop,java.instrument,java.management,java.net.http,java.prefs,java.rmi,java.scripting,java.security.jgss,java.sql.rowset,jdk.jfr,jdk.net,jdk.unsupported,jdk.management.agent,jdk.crypto.ec,jdk.management.jfr \
        --no-man-pages \
        --no-header-files \
        --compress=2 \
