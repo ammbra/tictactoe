@@ -6,7 +6,7 @@ A sample web app to play Tic Tac Toe against the computer. The application requi
 
 This application has several components:
 
-* Running on JDK 21 and built with Maven.
+* Running on JDK 21+ and built with Maven.
 * Setup built with Spring Boot (v3.2.2), persistency layer with JPA and H2 database, UI with Thymeleaf with Bootstrap
 * Containerized with Dockerfile and deployed with Docker Compose.
 
