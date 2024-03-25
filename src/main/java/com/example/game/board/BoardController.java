@@ -59,7 +59,8 @@ public class BoardController {
 			Coordinate coordinate = new Coordinate(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]));
 			board = boardService.findPreviousMatch(player);
 			boardService.move(board, coordinate);
-			boardService.randomMove(board);
+			if (board.getLines().size() > 0)
+				boardService.randomMove(board);
 		}
 
 		placeGameAttributes(model, board);
