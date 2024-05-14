@@ -34,7 +34,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 			es.onEvent(JDK_X509_VALIDATION, recordedEvent -> {
 				Gauge.builder(JDK_X509_VALIDATION + VALIDATION_COUNTER,
 								recordedEvent, e -> e.getLong(VALIDATION_COUNTER))
-						.description("X509 Certificate Validation Counter").register(metricsRegistry);
+						.description("X509 Certificate Validation Gauge").register(metricsRegistry);
 			});
 
 			es.start();

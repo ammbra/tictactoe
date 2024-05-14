@@ -34,7 +34,7 @@ DNS.2 = springboot
 IP.1 = 127.0.0.1
 ```
 
-4. Sign the request with our rootCA.crt certificate and its private key:
+4. Sign the request with our localCA.crt certificate and its private key:
 ```shell
 openssl x509 -req -CA localCA.crt -CAkey localCA.key -in localhost.csr \
     -out localhost.crt -days 365 -CAcreateserial -extfile local.ext
