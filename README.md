@@ -81,7 +81,8 @@ spring.ssl.bundle.jks.mybundle.keystore.location=stores/keystore.p12
 spring.ssl.bundle.jks.mybundle.truststore.location=stores/truststore.p12
 ```
 
-**IMPORTANT** For demo purposes, `application.properties` file contains the passwords in clear. For production environments you must consider encrypting your passwords.
+**IMPORTANT** For demo purposes, `application.properties` contains the passwords in clear. 
+For production environments you must consider encrypting your passwords.
 
 ## How to play
 

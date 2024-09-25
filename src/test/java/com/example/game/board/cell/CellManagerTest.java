@@ -20,18 +20,6 @@ class CellManagerTest {
 	}
 
 	@Test
-	void findRandomFreeCell() {
-		CellManager cellManager =  new CellManager();
-		List<List<String>> lines =  new ArrayList<>();
-		lines.addAll(Collections.singleton(Arrays.asList(Cell.EMPTY.toString(), Cell.EMPTY.toString(), Cell.EMPTY.toString())));
-
-		Coordinate freeCell = cellManager.findRandomFreeCell(lines);
-		assertThat(freeCell.horizontal()).isNotNegative();
-		assertThat(freeCell.vertical()).isNotNegative();
-
-	}
-
-	@Test
 	void collectAll() {
 		List<List<String>> lines = new ArrayList<>();
 		for (int index = 0; index < 3; index++) {

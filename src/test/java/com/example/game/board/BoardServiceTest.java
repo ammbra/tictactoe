@@ -63,7 +63,6 @@ class BoardServiceTest {
 		when(cellManager.init()).thenCallRealMethod();
 
 		Board board = service.build(new Player(), Cell.X);
-		when(cellManager.findRandomFreeCell(board.getLines())).thenCallRealMethod();
 
 		service.randomMove(board);
 

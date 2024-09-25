@@ -1,5 +1,5 @@
 # Define your base image
-FROM container-registry.oracle.com/java/openjdk:22-oraclelinux8 as jre-build
+FROM container-registry.oracle.com/java/openjdk:23-oraclelinux9 as jre-build
 
 RUN $JAVA_HOME/bin/jlink \
        --add-modules java.base,java.compiler,java.desktop,java.instrument,java.management,java.net.http,java.prefs,java.rmi,java.scripting,java.security.jgss,java.sql.rowset,jdk.jfr,jdk.net,jdk.unsupported,jdk.management.agent,jdk.crypto.ec,jdk.management.jfr \
@@ -11,7 +11,7 @@ RUN $JAVA_HOME/bin/jlink \
 # Define your base image
 FROM oraclelinux:9-slim
 
-ENV JAVA_HOME /usr/java/openjdk-22
+ENV JAVA_HOME /usr/java/openjdk-23
 ENV PATH $JAVA_HOME/bin:$PATH
 COPY --from=jre-build /javaruntime $JAVA_HOME
 

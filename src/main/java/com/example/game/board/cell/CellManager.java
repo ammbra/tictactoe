@@ -47,17 +47,4 @@ public class CellManager {
         return borders;
     }
 
-    public Coordinate findRandomFreeCell(List<List<String>> lines) {
-        List<Coordinate> freeCells = IntStream.range(0, lines.size())
-                .boxed()
-                .flatMap(rowIndex -> IntStream.range(0, lines.getFirst().size())
-                        .mapToObj(columnIndex -> new Coordinate(rowIndex, columnIndex)))
-                .filter(cell -> lines.get(cell.horizontal()).get(cell.vertical()).isEmpty())
-                .toList();
-
-        int random = new Random().nextInt(freeCells.size());
-
-        return freeCells.get(random);
-
-    }
 }

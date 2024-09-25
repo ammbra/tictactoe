@@ -31,11 +31,9 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 			countTLSHandshake(metricsRegistry, es);
 			countX509Parser(metricsRegistry, es);
 
-			es.onEvent(JDK_X509_VALIDATION, recordedEvent -> {
-				Gauge.builder(JDK_X509_VALIDATION + VALIDATION_COUNTER,
-								recordedEvent, e -> e.getLong(VALIDATION_COUNTER))
-						.description("X509 Certificate Validation Gauge").register(metricsRegistry);
-			});
+			es.onEvent(JDK_X509_VALIDATION, recordedEvent -> Gauge.builder(JDK_X509_VALIDATION + VALIDATION_COUNTER,
+							recordedEvent, e -> e.getLong(VALIDATION_COUNTER))
+					.description("X509 Certificate Validation Gauge").register(metricsRegistry));
 
 			es.start();
 		} catch (IOException e) {
@@ -44,7 +42,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 	}
 
 	private static void countTLSHandshake(CompositeMeterRegistry metricsRegistry, EventStream es) {
-		es.onEvent(JDK_TLS_HANDSHAKE, recordedEvent -> {
+		es.onEvent(JDK_TLS_HANDSHAKE, _ -> {
 
 			Counter counter = metricsRegistry.find(JDK_TLS_HANDSHAKE).counter();
 			if (Objects.nonNull(counter)) {

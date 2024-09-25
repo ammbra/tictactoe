@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 @Service
 public class BoardService {
@@ -42,8 +44,17 @@ public class BoardService {
 
 
     public void randomMove(Board board) {
-        Coordinate location = cellManager.findRandomFreeCell(board.getLines());
-        move(board, location);
+        List<List<String>> lines = board.getLines();
+        List<Coordinate> freeCells = IntStream.range(0, lines.size())
+                .boxed()
+                .flatMap(rowIndex -> IntStream.range(0, lines.getFirst().size())
+                        .mapToObj(columnIndex -> new Coordinate(rowIndex, columnIndex)))
+                .filter(cell -> lines.get(cell.horizontal()).get(cell.vertical()).isEmpty())
+                .toList();
+        if (!freeCells.isEmpty()) {
+            int random = new Random().nextInt(freeCells.size());
+            move(board, freeCells.get(random));
+        }
     }
 
     public void move(Board board, Coordinate location) {
